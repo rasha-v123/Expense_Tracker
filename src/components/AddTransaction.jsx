@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { GlobalContext } from "../context/GolbalState";
 
 const AddTransaction = () => {
+  const { addTransaction } = useContext(GlobalContext);
   const [transaction, setTransaction] = useState({
     text: "",
     amount: 0,
@@ -21,7 +23,13 @@ const AddTransaction = () => {
   function handleSubmit(e) {
     e.preventDefault();
     setTransaction(transaction);
-    console.log(transaction);
+    const newTransaction = {
+      id: Math.floor(Math.random() * 10000000),
+      text: transaction.text,
+      amount: transaction.amount,
+    };
+    addTransaction(newTransaction);
+    setTransaction({ text: "", amount: 0 });
   }
 
   return (
